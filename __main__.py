@@ -5,7 +5,7 @@ from telegram.ext import MessageHandler, Filters, CommandHandler
 
 TOKEN = os.environ.get('TOKEN')
 PORT = int(os.environ.get('PORT', '8443'))
-VERSION = 1.30
+VERSION = 1.31
 story = "C'era una volta 📖 una principessa 👸🏼 di nome Camilla, che viveva in un enorme castello 🏰 di ghiaccio ❄.\nCamilla aveva un pinguino 🐧 di nome Pingu e Camilla e Pingu erano molto amici 😊: tutti i giorni uscivano dal castello e giocavano a tirare le palle di neve ☃ ai passanti.\nNel castello viveva anche Chicco, un coniglio 🐰 che si divertiva a fare dolci 🍪 per Camilla e Pingu.\nUn giorno, mentre giocavano, presero in testa con una palla di neve la strega 🧙🏻‍♀️ Alberta, la quale si adirò profondamente 😡.\nChicco tentò di offrirle un dolce 🎂 per scusarsi 😥, ma la strega lo trasformò in un robottino 🤖 con la pancia a forma di sandwich 🥪.\nPingu si arrabbiò moltissimo 😤 per questo e la minacciò che se non avesse ri-trasformato chicco in un coniglio, avrebbe chiamato l'orco 👹 Parisi.\nLa strega senza paura gli disse di chiamarlo pure e quando l'orco Parisi arrivò, caricò in spalla Camilla e Pingu, e mentre lui conciava 🤕 per bene la strega, loro la prendevano a palle di neve e Chicco tirava sorbetti 🍧 al limone 🍋.\nLa strega scappò urlando 😱 e trasformò di nuovo Chicco in un coniglio.\nLa strega non tornò mai più al castello di Camilla e tutti vissero felici e contenti 🎈."
 updater = telegram.ext.Updater(TOKEN, use_context=True)
 dispatcher = updater.dispatcher
@@ -89,8 +89,6 @@ def numero(update, context):
 	context.bot.send_message(chat_id=update.message.chat_id, text=t)
 
 # add handlers
-msg_handler = MessageHandler(Filters.text, processText)
-dispatcher.add_handler(msg_handler)
 moneta_handler = CommandHandler("moneta", moneta)
 dispatcher.add_handler(moneta_handler)
 saluto_handler = CommandHandler("saluto", saluto)
@@ -99,6 +97,8 @@ info_handler = CommandHandler("info", info)
 dispatcher.add_handler(info_handler)
 numero_handler = CommandHandler("numero", numero)
 dispatcher.add_handler(numero_handler)
+msg_handler = MessageHandler(Filters.text, processText)
+dispatcher.add_handler(msg_handler)
 
 updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN)
 #updater.bot.set_webhook("https://causbot.herokuapp.com/"+TOKEN)
